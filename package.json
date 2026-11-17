@@ -1,0 +1,16 @@
+{
+  "name": "biblioteca-supabase",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:api": "node livros.js",
+    "test:db": "node index.js",
+    "diagnostico": "node diagnostico.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
+    "dotenv": "^18.0.8",
+    "pg": "^8.23.1"
+  }
+}

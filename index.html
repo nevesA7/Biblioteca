@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minha biblioteca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="pagina">
+  <header class="cabecalho">
+    <h1>Minha biblioteca</h1>
+    <p id="contagem" aria-live="polite">Carregando a estante...</p>
+  </header>
+
+  <section class="area-estante" aria-label="Estante de livros">
+    <ul id="estante" class="estante"></ul>
+
+    <article id="detalhe" class="detalhe" hidden>
+      <h2 id="det-titulo"></h2>
+      <p id="det-info"></p>
+      <div class="acoes">
+        <button type="button" id="btn-lido" class="btn-principal"></button>
+        <button type="button" id="btn-apagar" class="btn-perigo">Apagar livro</button>
+      </div>
+    </article>
+  </section>
+
+  <form id="form" class="formulario">
+    <h2>Adicionar livro</h2>
+    <label>Título
+      <input id="titulo" required autocomplete="off">
+    </label>
+    <label>Autor
+      <input id="autor" required autocomplete="off">
+    </label>
+    <label>Ano de publicação
+      <input id="ano" type="number" inputmode="numeric" min="0" max="2100">
+    </label>
+    <button type="submit" class="btn-principal">Adicionar à estante</button>
+    <p id="msg" class="msg" role="status" aria-live="polite"></p>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

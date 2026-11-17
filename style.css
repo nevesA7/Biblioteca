@@ -1,0 +1,225 @@
+:root {
+  --parede: #e3e8e5;
+  --tinta: #1b2a2e;
+  --tinta-suave: #51636a;
+  --madeira: #5a3b2a;
+  --madeira-sombra: rgba(40, 25, 15, 0.2);
+  --perigo: #9b1f2e;
+  --linha: #aebbb6;
+  --altura-fileira: 230px;
+  --altura-tabua: 14px;
+  --espaco-fileira: 20px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--parede);
+  color: var(--tinta);
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.pagina {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 48px 24px 72px;
+  display: grid;
+  grid-template-columns: minmax(250px, 320px) 1fr;
+  grid-template-areas:
+    "cab estante"
+    "form estante";
+  grid-template-rows: auto 1fr;
+  column-gap: 64px;
+  row-gap: 32px;
+  align-items: start;
+}
+
+.cabecalho { grid-area: cab; }
+.area-estante { grid-area: estante; min-width: 0; padding-top: 6px; }
+.formulario { grid-area: form; }
+
+h1 {
+  margin: 0 0 8px;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+#contagem { margin: 0; color: var(--tinta-suave); }
+
+/* Formulário: direto sobre a parede, campos só com linha embaixo */
+.formulario h2 { margin: 0 0 12px; font-size: 1.15rem; font-weight: 700; }
+
+.formulario label {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  color: var(--tinta-suave);
+}
+
+.formulario input {
+  display: block;
+  width: 100%;
+  padding: 6px 0 8px;
+  border: 0;
+  border-bottom: 2px solid var(--linha);
+  background: transparent;
+  color: var(--tinta);
+  font: inherit;
+  font-size: 1.05rem;
+  border-radius: 0;
+}
+
+.formulario input:focus { outline: none; border-bottom-color: var(--tinta); }
+
+button { font: inherit; cursor: pointer; }
+
+.btn-principal {
+  padding: 11px 20px;
+  border: 2px solid var(--tinta);
+  border-radius: 999px;
+  background: var(--tinta);
+  color: #fff;
+  font-weight: 600;
+}
+.btn-principal:hover { background: #2c4047; }
+.btn-principal:disabled { opacity: 0.6; cursor: wait; }
+
+.btn-perigo {
+  padding: 11px 20px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--perigo);
+  font-weight: 600;
+}
+.btn-perigo:hover { border-color: var(--perigo); }
+
+:focus-visible { outline: 3px solid #2c6fd1; outline-offset: 3px; }
+
+.msg { min-height: 1.5em; margin: 12px 0 0; font-size: 0.95rem; }
+.msg.erro { color: var(--perigo); }
+.msg.ok { color: #1f6b46; }
+
+/* Estante: cada fileira tem 230px de altura + tábua de madeira */
+.estante {
+  list-style: none;
+  margin: 0;
+  padding: 0 4px calc(var(--altura-tabua) + 6px);
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 3px;
+  row-gap: var(--espaco-fileira);
+  align-content: flex-start;
+  min-height: calc(var(--altura-fileira) + var(--altura-tabua) + 6px);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent var(--altura-fileira),
+    var(--madeira) var(--altura-fileira),
+    var(--madeira) calc(var(--altura-fileira) + var(--altura-tabua)),
+    var(--madeira-sombra) calc(var(--altura-fileira) + var(--altura-tabua)),
+    var(--madeira-sombra) calc(var(--altura-fileira) + var(--altura-tabua) + 6px),
+    transparent calc(var(--altura-fileira) + var(--altura-tabua) + 6px),
+    transparent calc(var(--altura-fileira) + var(--espaco-fileira))
+  );
+}
+
+.estante li {
+  height: var(--altura-fileira);
+  display: flex;
+  align-items: flex-end;
+}
+
+.vazio {
+  flex: 1 1 100%;
+  height: var(--altura-fileira);
+  padding-bottom: 28px;
+  color: var(--tinta-suave);
+  font-size: 1.05rem;
+  align-items: flex-end;
+}
+
+.lombada {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 30px 0;
+  border: 0;
+  border-radius: 3px 3px 0 0;
+  overflow: hidden;
+  box-shadow: inset -3px 0 0 rgba(0, 0, 0, 0.18), inset 2px 0 0 rgba(255, 255, 255, 0.14);
+  transition: transform 0.18s ease;
+}
+
+.lombada::before,
+.lombada::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.35;
+}
+.lombada::before { top: 14px; }
+.lombada::after { bottom: 14px; }
+
+.lombada:hover { transform: translateY(-6px); }
+.lombada[aria-pressed="true"] { transform: translateY(-14px); }
+
+.lombada .nome {
+  writing-mode: vertical-rl;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Marcador de página pendurado nos livros já lidos */
+.marcador {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  width: 9px;
+  height: 30px;
+  background: #f6f1e4;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+}
+
+.detalhe {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 2px solid var(--linha);
+  max-width: 560px;
+}
+.detalhe h2 {
+  margin: 0 0 4px;
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.detalhe p { margin: 0 0 18px; color: var(--tinta-suave); }
+.acoes { display: flex; flex-wrap: wrap; gap: 8px; }
+
+@media (max-width: 820px) {
+  .pagina {
+    grid-template-columns: 1fr;
+    grid-template-areas: "cab" "estante" "form";
+    grid-template-rows: none;
+    padding: 32px 16px 56px;
+    row-gap: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lombada { transition: none; }
+}
